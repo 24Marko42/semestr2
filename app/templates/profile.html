@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Profile: {{ user.username }}</h2>
+  <h3>Saved Recipes</h3>
+  <ul>
+  {% for r in saved %}
+    <li><a href="/recipe/{{ r.id }}">{{ r.title }}</a></li>
+  {% else %}
+    <li>No saved recipes.</li>
+  {% endfor %}
+  </ul>
+{% endblock %}

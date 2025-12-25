@@ -9,6 +9,10 @@
       {{ form.title(class="form-control") }}
     </div>
     <div class="mb-3">
+      {{ form.description.label(class="form-label") }}
+      {{ form.description(class="form-control", rows=2) }}
+    </div>
+    <div class="mb-3">
       {{ form.ingredients.label(class="form-label") }}
       {{ form.ingredients(class="form-control", rows=4) }}
     </div>
@@ -19,6 +23,10 @@
     <div class="mb-3">
       {{ form.tags.label(class="form-label") }}
       {{ form.tags(class="form-control") }}
+    </div>
+    <div class="mb-3">
+      {{ form.image_url.label(class="form-label") }}
+      {{ form.image_url(class="form-control") }}
     </div>
     <div class="mb-3">
       {{ form.image.label(class="form-label") }}

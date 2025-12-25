@@ -2,12 +2,38 @@
 
 {% block content %}
   <h2>Register</h2>
-  <form method="post">
+  <form method="post" class="mt-3">
     {{ form.hidden_tag() }}
-    <p>{{ form.username.label }}<br>{{ form.username }}</p>
-    <p>{{ form.email.label }}<br>{{ form.email }}</p>
-    <p>{{ form.password.label }}<br>{{ form.password }}</p>
-    <p>{{ form.password2.label }}<br>{{ form.password2 }}</p>
-    <p>{{ form.submit }}</p>
+    <div class="mb-3">
+      {{ form.username.label(class='form-label') }}
+      {{ form.username(class='form-control') }}
+      {% for e in form.username.errors %}
+        <div class="text-danger small">{{ e }}</div>
+      {% endfor %}
+    </div>
+    <div class="mb-3">
+      {{ form.email.label(class='form-label') }}
+      {{ form.email(class='form-control') }}
+      {% for e in form.email.errors %}
+        <div class="text-danger small">{{ e }}</div>
+      {% endfor %}
+    </div>
+    <div class="mb-3">
+      {{ form.password.label(class='form-label') }}
+      {{ form.password(class='form-control') }}
+      {% for e in form.password.errors %}
+        <div class="text-danger small">{{ e }}</div>
+      {% endfor %}
+    </div>
+    <div class="mb-3">
+      {{ form.password2.label(class='form-label') }}
+      {{ form.password2(class='form-control') }}
+      {% for e in form.password2.errors %}
+        <div class="text-danger small">{{ e }}</div>
+      {% endfor %}
+    </div>
+    <div>
+      {{ form.submit(class='btn btn-primary') }}
+    </div>
   </form>
 {% endblock %}

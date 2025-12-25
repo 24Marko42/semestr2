@@ -1,6 +1,8 @@
 from . import db, login
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from flask import current_app
 
 recipe_tags = db.Table('recipe_tags',
     db.Column('recipe_id', db.Integer, db.ForeignKey('recipe.id'), primary_key=True),
@@ -41,30 +43,44 @@ class User(UserMixin, db.Model):
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140), nullable=False)
+    description = db.Column(db.Text)
     ingredients = db.Column(db.Text)
     steps = db.Column(db.Text)
     image = db.Column(db.String(200))
+    image_url = db.Column(db.String(400))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     tags = db.relationship('Tag', secondary=recipe_tags, backref='recipes')
 
     def to_dict(self):
-        return {
+        d = {
             'id': self.id,
             'title': self.title,
+            'description': self.description,
             'ingredients': self.ingredients,
             'steps': self.steps,
             'image': self.image,
+            'image_url': self.image_url,
             'author': self.author.username if self.author else None,
             'tags': [t.name for t in self.tags],
+            'created_at': self.created_at.isoformat() if self.created_at else None,
         }
         try:
             likes = self.liked_by.count()
-        except TypeError:
+        except Exception:
             likes = len(self.liked_by)
         d['likes'] = likes
         return d
+
+    def image_file_exists(self):
+        if not self.image:
+            return False
+        up = current_app.config.get('UPLOAD_FOLDER')
+        if not up:
+            return False
+        path = os.path.join(up, self.image)
+        return os.path.exists(path)
 
     def __repr__(self):
         return f'<Recipe {self.title}>'

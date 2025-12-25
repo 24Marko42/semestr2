@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Coffee Recipes{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="{{ url_for('static', filename='image.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% block head %}{% endblock %}
   </head>
@@ -26,6 +27,9 @@
               <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.login') }}">Login</a></li>
               <li class="nav-item"><a class="nav-link" href="{{ url_for('auth.register') }}">Register</a></li>
             {% endif %}
+            <li class="nav-item ms-2">
+              <button id="theme-toggle" class="btn btn-sm btn-outline-light" title="Toggle dark theme">🌙</button>
+            </li>
           </ul>
         </div>
       </div>
@@ -50,5 +54,98 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Theme toggle
+      (function() {
+        const btn = document.getElementById('theme-toggle');
+        const root = document.documentElement;
+        function setDark(d) {
+          if (d) {
+            document.body.classList.add('dark-mode');
+            btn.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+          } else {
+            document.body.classList.remove('dark-mode');
+            btn.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+          }
+        }
+        if (btn) {
+          btn.addEventListener('click', function () {
+            setDark(!document.body.classList.contains('dark-mode'));
+          });
+          // Initialize from preference
+          const pref = localStorage.getItem('theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          setDark(pref === 'dark');
+        }
+      })();
+
+      // Delegate click handler for like buttons and remove-like buttons
+      document.addEventListener('click', async function (e) {
+        // Handle like buttons (toggle like)
+        const likeBtn = e.target.closest('.like-btn');
+        if (likeBtn) {
+          e.preventDefault();
+          const recipeId = likeBtn.dataset.recipeId;
+          if (!recipeId) return;
+          try {
+            const resp = await fetch(`/api/recipes/${recipeId}/like`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({}),
+              credentials: 'same-origin'
+            });
+            if (resp.status === 401) {
+              alert('Please log in to like recipes.');
+              return;
+            }
+            if (!resp.ok) {
+              console.error('Like request failed', resp.status);
+              return;
+            }
+            const j = await resp.json();
+            const wasLiked = likeBtn.dataset.liked === '1';
+            likeBtn.dataset.liked = wasLiked ? '0' : '1';
+            likeBtn.classList.toggle('liked', !wasLiked);
+            const countEl = likeBtn.querySelector('.like-count');
+            if (countEl && typeof j.likes !== 'undefined') {
+              countEl.textContent = j.likes;
+            }
+          } catch (err) {
+            console.error('Like request error', err);
+          }
+          return;
+        }
+
+        // Handle remove-like in profile (remove the liked recipe entry without navigation)
+        const removeBtn = e.target.closest('.remove-like-btn');
+        if (removeBtn) {
+          e.preventDefault();
+          const recipeId = removeBtn.dataset.recipeId;
+          if (!recipeId) return;
+          try {
+            const resp = await fetch(`/api/recipes/${recipeId}/like`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({}),
+              credentials: 'same-origin'
+            });
+            if (resp.status === 401) {
+              alert('Please log in to remove likes.');
+              return;
+            }
+            if (!resp.ok) {
+              console.error('Remove like failed', resp.status);
+              return;
+            }
+            // On success, remove the list item from DOM
+            const li = removeBtn.closest('li');
+            if (li) li.remove();
+          } catch (err) {
+            console.error('Remove like error', err);
+          }
+        }
+      });
+    </script>
   </body>
 </html>

@@ -68,6 +68,12 @@ pytest -q
 
 ## Устранение проблем (Quick Troubleshooting)
 - Убедитесь, что виртуальное окружение активировано
+- Если при регистрации появляется ошибка "Install 'email_validator' for email validation support", установите пакет:
+
+```bash
+pip install email-validator
+```
+(пакет теперь включён в `requirements.txt`, поэтому `pip install -r requirements.txt` тоже решит проблему)
 - Если сервер не запускается, проверьте, что у вас правильно введена команда `python run.py` (иногда в PowerShell случайно вводят похожие символы, например `сpython` с кириллической буквой "с").
 - Для локальной разработки приложение автоматически создаст SQLite базу, если `DATABASE_URL` указывает на файл, которого ещё нет.
 
@@ -137,3 +143,15 @@ Below are concise steps and options to deploy the app and connect a domain.
 - Environment variables are set and secret values are not committed to the repo.
 
 If you'd like, I can add a `deploy.md` with an example systemd unit file and an Nginx config tailored to this project, or scaffold a `Dockerfile`+`docker-compose.yml` for container deployment.
+
+---
+
+Seeding sample recipes
+
+To add example recipes (with descriptions and images from the web) run:
+
+```bash
+python scripts/seed_recipes.py
+```
+
+This creates several sample recipes with image URLs from Unsplash for development or demo purposes.

@@ -11,9 +11,10 @@ bp = Blueprint('auth', __name__, template_folder='templates')
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+        identifier = form.identifier.data
+        user = User.query.filter_by(username=identifier).first() or User.query.filter_by(email=identifier).first()
         if user and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember.data)
             return redirect(url_for('web.index'))
         flash('Invalid username or password')
     return render_template('login.html', form=form)

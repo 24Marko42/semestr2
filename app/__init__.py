@@ -22,14 +22,22 @@ else:
 login = LoginManager()
 
 
-def create_app(config_class=Config):
+def create_app(config_class=Config, config_overrides=None):
+    """Create Flask app. Optionally pass a dict `config_overrides` which will be
+    applied after the `config_class` to allow tests to override e.g. the database URI.
+    """
     app = Flask(__name__)
     app.config.from_object(config_class)
+    if config_overrides:
+        app.config.update(config_overrides)
 
     db.init_app(app)
     if migrate:
         migrate.init_app(app, db)
     login.init_app(app)
+    # Ensure unauthorized users are redirected to the auth.login view
+    login.login_view = 'auth.login'
+    login.login_message = 'Please log in to access this page.'
 
     # Initialize Flasgger with the YAML spec if present and flasgger installed
     if Swagger:

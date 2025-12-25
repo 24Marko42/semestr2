@@ -1,11 +1,12 @@
 from flask import Blueprint, jsonify, request
+from flask_login import current_user
 from .models import Recipe, Tag, User
 from . import db
 
 bp = Blueprint('api', __name__)
 
 
-@bp.route('/recipes', methods=['GET'])
+@bp.route('/recipes', methods=['GET'], strict_slashes=False)
 def list_recipes():
     """
     List recipes
@@ -34,7 +35,7 @@ def list_recipes():
     return jsonify([r.to_dict() for r in recipes])
 
 
-@bp.route('/recipes', methods=['POST'])
+@bp.route('/recipes', methods=['POST'], strict_slashes=False)
 def create_recipe():
     """
     Create a new recipe
@@ -49,9 +50,13 @@ def create_recipe():
             properties:
               title:
                 type: string
+              description:
+                type: string
               ingredients:
                 type: string
               steps:
+                type: string
+              image_url:
                 type: string
               tags:
                 type: array
@@ -66,8 +71,10 @@ def create_recipe():
     if not title:
         return jsonify({'error': 'title required'}), 400
     recipe = Recipe(title=title,
+                    description=data.get('description'),
                     ingredients=data.get('ingredients'),
-                    steps=data.get('steps'))
+                    steps=data.get('steps'),
+                    image_url=data.get('image_url'))
     tags = data.get('tags') or []
     for t in tags:
         tag = Tag.query.filter_by(name=t).first()
@@ -79,7 +86,7 @@ def create_recipe():
     return jsonify(recipe.to_dict()), 201
 
 
-@bp.route('/recipes/<int:id>', methods=['GET'])
+@bp.route('/recipes/<int:id>', methods=['GET'], strict_slashes=False)
 def get_recipe(id):
     """
     Get a recipe by id
@@ -98,7 +105,7 @@ def get_recipe(id):
     return jsonify(r.to_dict())
 
 
-@bp.route('/recipes/<int:id>', methods=['PUT'])
+@bp.route('/recipes/<int:id>', methods=['PUT'], strict_slashes=False)
 def update_recipe(id):
     """
     Update a recipe
@@ -134,7 +141,7 @@ def update_recipe(id):
     return jsonify(r.to_dict())
 
 
-@bp.route('/recipes/<int:id>', methods=['DELETE'])
+@bp.route('/recipes/<int:id>', methods=['DELETE'], strict_slashes=False)
 def delete_recipe(id):
     r = Recipe.query.get_or_404(id)
     db.session.delete(r)
@@ -142,7 +149,7 @@ def delete_recipe(id):
     return jsonify({'result': 'deleted'})
 
 
-@bp.route('/recipes/<int:id>/like', methods=['POST'])
+@bp.route('/recipes/<int:id>/like', methods=['POST'], strict_slashes=False)
 def like_recipe(id):
     """
     Toggle like for a recipe by user_id
@@ -167,10 +174,17 @@ def like_recipe(id):
         description: Returns current likes count
     """
     r = Recipe.query.get_or_404(id)
-    user_id = request.json.get('user_id') if request.is_json else request.form.get('user_id')
+    # Accept user_id via JSON/form or fall back to logged-in user
+    user_id = None
+    if request.is_json and request.json is not None:
+        user_id = request.json.get('user_id')
+    else:
+        user_id = request.form.get('user_id')
+    if not user_id and current_user.is_authenticated:
+        user_id = current_user.id
     if not user_id:
-        return jsonify({'error': 'user_id required'}), 400
-    user = User.query.get(user_id)
+        return jsonify({'error': 'authentication required'}), 401
+    user = User.query.get(int(user_id))
     if not user:
         return jsonify({'error': 'user not found'}), 404
     if r in user.liked:
@@ -185,7 +199,7 @@ def like_recipe(id):
     return jsonify({'likes': likes})
 
 
-@bp.route('/recipes/<int:id>/save', methods=['POST'])
+@bp.route('/recipes/<int:id>/save', methods=['POST'], strict_slashes=False)
 def save_recipe(id):
     """
     Toggle save for a recipe by user_id (save/unsave)
@@ -210,10 +224,17 @@ def save_recipe(id):
         description: Returns number of saved recipes for user
     """
     r = Recipe.query.get_or_404(id)
-    user_id = request.json.get('user_id') if request.is_json else request.form.get('user_id')
+    # Accept user_id via JSON/form or fall back to logged-in user
+    user_id = None
+    if request.is_json and request.json is not None:
+        user_id = request.json.get('user_id')
+    else:
+        user_id = request.form.get('user_id')
+    if not user_id and current_user.is_authenticated:
+        user_id = current_user.id
     if not user_id:
-        return jsonify({'error': 'user_id required'}), 400
-    user = User.query.get(user_id)
+        return jsonify({'error': 'authentication required'}), 401
+    user = User.query.get(int(user_id))
     if not user:
         return jsonify({'error': 'user not found'}), 404
     if r in user.saved:

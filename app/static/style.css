@@ -25,12 +25,12 @@ pre { white-space: pre-wrap; word-wrap: break-word; }
   --card-border: #1f2937;
   --text: #e6eef6;
   --muted-bg: rgba(255,255,255,0.03);
-}
+} 
 
 body.dark-mode {
   background: var(--bg);
   color: var(--text);
-}
+} 
 
 body.dark-mode .navbar,
 body.dark-mode .footer,
@@ -45,7 +45,7 @@ body.dark-mode .card {
   background: var(--surface);
   border-color: var(--card-border);
   color: var(--text);
-}
+} 
 
 body.dark-mode .card .card-title a { color: var(--text); }
 

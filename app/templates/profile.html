@@ -2,8 +2,8 @@
 
 {% block content %}
   <h2>Profile: {{ user.username }}</h2>
-  
-  {% comment %} <!-- Saved Recipes - сохраненные рецепты -->
+
+  <!-- Saved Recipes - сохраненные рецепты -->
   {% if saved %}
     <h3>Saved Recipes</h3>
     <ul>
@@ -11,7 +11,7 @@
         <li><a href="/recipe/{{ r.id }}">{{ r.title }}</a></li>
       {% endfor %}
     </ul>
-  {% endif %} {% endcomment %}
+  {% endif %} 
 
   <!-- Liked Recipes - лайкнутые рецепты -->
   {% if liked %}

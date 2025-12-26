@@ -98,22 +98,6 @@ Great for screenshots, demos, or testing UI flows.
 
 ---
 
-## Deployment Options
-
-### VPS (Nginx + Gunicorn)
-- Runs behind reverse proxy  
-- Static files served by Nginx  
-- TLS via Let’s Encrypt  
-- Full control over environment
-
-### PaaS (Render / Railway / Heroku)
-- Git push → auto-deploy  
-- Managed TLS & scaling  
-- Easy env var setup  
-- Free tiers available
-
----
-
 ## Tech Stack
 
 - **Backend**: Flask, Flask-Login, Flask-WTF, Flask-SQLAlchemy  

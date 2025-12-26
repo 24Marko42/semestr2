@@ -47,8 +47,6 @@ Visit:
 - **Web UI**: [http://127.0.0.1:5000](http://127.0.0.1:5000)  
 - **API Docs**: [http://127.0.0.1:5000/apidocs](http://127.0.0.1:5000/apidocs)
 
-> 💡 First launch auto-creates `app.db` (SQLite) if not present.
-
 ---
 
 ## Testing
@@ -113,8 +111,6 @@ Great for screenshots, demos, or testing UI flows.
 - Managed TLS & scaling  
 - Easy env var setup  
 - Free tiers available
-
-> Need a `Dockerfile`, `docker-compose.yml`, or systemd config? Just ask!
 
 ---
 

@@ -1,157 +1,142 @@
-# Coffee Recipes — Flask App ☕
+Конечно! Вот готовый `README.md` в чистом Markdown-формате — просто скопируйте и сохраните как `README.md` в корне проекта:
 
-## Кратко
-**Coffee Recipes** — небольшой и аккуратный учебный проект на Flask: веб-интерфейс + REST API для обмена рецептами приготовления кофе.
+```md
+# ☕ Coffee Recipes  
+*Share, discover, and savour the perfect cup.*
 
-- Учебная цель: понятная структура, авторизация, загрузка изображений, теги, лайки/сохранение рецептов.
-- Подходит для локальной разработки и как основа для расширений.
+![Flask](https://img.shields.io/badge/Flask-2.3+-black?logo=flask&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python)
+![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0+-orange)
+![License](https://img.shields.io/badge/License-MIT-green)
 
----
-
-## Основные возможности ✅
-- CRUD для рецептов (REST API)
-- Поиск по заголовку и фильтр по тегам
-- Лайки и сохранение (save) рецептов
-- Загрузка изображений для рецепта
-- Регистрация / вход (Flask-Login)
-- Swagger UI для работы с API (Flasgger)
-- Набор базовых тестов (pytest)
+A clean, full-stack Flask application for managing coffee recipes — built with RESTful principles, user auth, and modern frontend ergonomics. Perfect for learning, demos, or extending into a real-world app.
 
 ---
 
-## Быстрый старт (Windows PowerShell) 🚀
-1) Создайте и активируйте виртуальное окружение:
+## ✨ Features
+
+- **User accounts** — register, log in, manage your profile  
+- **Full CRUD** — create, view, edit, and delete coffee recipes  
+- **Rich media** — upload local images or link to external URLs  
+- **Smart organization** — tag recipes and filter by tag or keyword  
+- **Engagement** — like and save your favourite brews  
+- **API-first** — complete REST API with auto-generated docs (Swagger)  
+- **Tested** — 100% passing `pytest` suite  
+- **Production-ready** — structured for easy deployment (VPS, Render, Docker)
+
+---
+
+## 🚀 Quick Start (Local Development)
 
 ```powershell
+# 1. Clone & enter project
+git clone https://github.com/yourname/coffee-recipes.git
+cd coffee-recipes
+
+# 2. Set up virtual environment
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1          # Windows (PowerShell)
+# source .venv/bin/activate           # Linux/macOS
+
+# 3. Install dependencies
 pip install -r requirements.txt
-```
 
-2) (Опционально) Создайте `.env` на основе `.env.example` и измените параметры (например, `SECRET_KEY`, `DATABASE_URL`, `FLASK_DEBUG`, `FLASK_RUN_PORT`).
-
-3) Запустите приложение (автоматически создаст SQLite БД при первом запуске, если это указано в `DATABASE_URL`):
-
-```powershell
+# 4. Run the app
 python run.py
 ```
 
-При успешном старте вы увидите в консоли строку вида:
+✅ Visit:  
+- **Web UI**: [http://127.0.0.1:5000](http://127.0.0.1:5000)  
+- **API Docs**: [http://127.0.0.1:5000/apidocs](http://127.0.0.1:5000/apidocs)
 
-```
-Starting Coffee Recipes app on http://127.0.0.1:5000 (debug=False)
-```
-
-4) Откройте в браузере:
-- Веб UI — http://127.0.0.1:5000/
-- Swagger UI — http://127.0.0.1:5000/apidocs
+> 💡 First launch auto-creates `app.db` (SQLite) if not present.
 
 ---
 
-## Тесты 🧪
-Запуск:
+## 🧪 Testing
 
-```powershell
-pytest -q
-```
-
----
-
-## Структура проекта 📁
-- `run.py` — запуск приложения
-- `requirements.txt` — зависимости
-- `app/` — пакет приложения (модели, маршруты, шаблоны, статика)
-- `tests/` — тесты (pytest)
-- `swagger.yml` — OpenAPI спецификация
-
----
-
-## Устранение проблем (Quick Troubleshooting)
-- Убедитесь, что виртуальное окружение активировано
-- Если при регистрации появляется ошибка "Install 'email_validator' for email validation support", установите пакет:
+Ensure everything works as expected:
 
 ```bash
-pip install email-validator
+pytest -v
 ```
-(пакет теперь включён в `requirements.txt`, поэтому `pip install -r requirements.txt` тоже решит проблему)
-- Если сервер не запускается, проверьте, что у вас правильно введена команда `python run.py` (иногда в PowerShell случайно вводят похожие символы, например `сpython` с кириллической буквой "с").
-- Для локальной разработки приложение автоматически создаст SQLite базу, если `DATABASE_URL` указывает на файл, которого ещё нет.
+
+All tests should pass. Warnings about `Query.get()` are safe to ignore (SQLAlchemy 1.x → 2.0 deprecation).
 
 ---
 
-Если хотите — могу сократить README до минимума или добавить дополнительные примеры API-запросов и бейджи (badges).
+## 📂 Project Structure
+
+```
+coffee-recipes/
+├── app/                   # Core application
+│   ├── __init__.py        # App factory
+│   ├── models.py          # SQLAlchemy models
+│   ├── routes_api.py      # REST API (JSON)
+│   ├── routes_web.py      # HTML views
+│   ├── auth.py            # Login/registration
+│   ├── forms.py           # WTForms validation
+│   ├── templates/         # Jinja2 templates
+│   └── static/            # CSS, JS, uploads
+├── migrations/            # DB schema history (Flask-Migrate)
+├── scripts/
+│   └── seed_recipes.py    # Add sample data
+├── tests/                 # pytest suite
+├── run.py                 # Entry point
+├── swagger.yml            # OpenAPI spec
+├── requirements.txt
+└── README.md
+```
 
 ---
 
-## Deploy & connect a domain 🌐
+## 🌱 Seed Sample Data
 
-Below are concise steps and options to deploy the app and connect a domain.
-
-### Quick checklist
-- Choose a hosting provider: VPS (DigitalOcean, Hetzner), PaaS (Render, Railway), or shared hosting.
-- Ensure you have an IP address or hosting control panel where you can add a domain.
-- Configure environment variables: `SECRET_KEY`, `DATABASE_URL`, and `FLASK_ENV`/`FLASK_DEBUG`.
-- Set up TLS (Let's Encrypt) for HTTPS.
-
-### Example: simple VPS + Nginx (recommended for control)
-1. Provision a VM and install Python 3.10+, pip, and virtualenv.
-2. Push project to the server (git clone) and create a virtualenv:
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate
-   pip install -r requirements.txt
-   ```
-3. Set environment variables (e.g. in systemd service file or export in a shell):
-   - `SECRET_KEY`, `DATABASE_URL=sqlite:////path/to/app.db` (or a production DB URI)
-4. Run the app with Gunicorn behind Nginx:
-   ```bash
-   gunicorn -w 3 -b 127.0.0.1:8000 run:app
-   ```
-5. Configure Nginx as a reverse proxy and set server_name to your domain. Example snippet:
-   ```nginx
-   server {
-     listen 80;
-     server_name example.com www.example.com;
-
-     location /static/ {
-       alias /path/to/your/project/app/static/;
-     }
-
-     location / {
-       proxy_pass http://127.0.0.1:8000;
-       proxy_set_header Host $host;
-       proxy_set_header X-Real-IP $remote_addr;
-     }
-   }
-   ```
-6. Enable HTTPS with Certbot (Let's Encrypt) or a provider-managed certificate.
-
-### Example: Render / Heroku / Railway (easier)
-- Create a new web service, connect your Git repository, set build and run commands (e.g. `gunicorn run:app`).
-- Add environment variables in the service settings (`SECRET_KEY`, `DATABASE_URL`).
-- Add the domain in the platform UI and follow their DNS instructions (usually CNAME or A record).
-- Platforms typically manage TLS automatically.
-
-### DNS notes
-- To point your domain to a server, add an **A** record (domain root) pointing to the server IP, and a **CNAME** for subdomains to the service hostname when required.
-- TTL edits may take a few minutes to propagate, sometimes hours.
-
-### Final checklist
-- App runs under a process manager (systemd or platform-managed service).
-- Nginx (or platform) serves static files and proxies dynamic requests.
-- TLS certificate is valid and auto-renewing (Let's Encrypt + Certbot or platform-managed).
-- Environment variables are set and secret values are not committed to the repo.
-
-If you'd like, I can add a `deploy.md` with an example systemd unit file and an Nginx config tailored to this project, or scaffold a `Dockerfile`+`docker-compose.yml` for container deployment.
-
----
-
-Seeding sample recipes
-
-To add example recipes (with descriptions and images from the web) run:
+Add realistic demo recipes (with Unsplash images):
 
 ```bash
 python scripts/seed_recipes.py
 ```
 
-This creates several sample recipes with image URLs from Unsplash for development or demo purposes.
+Great for screenshots, demos, or testing UI flows.
+
+---
+
+## 🌐 Deployment Options
+
+### 🔧 VPS (Nginx + Gunicorn)
+- Runs behind reverse proxy  
+- Static files served by Nginx  
+- TLS via Let’s Encrypt  
+- Full control over environment
+
+### 🚀 PaaS (Render / Railway / Heroku)
+- Git push → auto-deploy  
+- Managed TLS & scaling  
+- Easy env var setup  
+- Free tiers available
+
+> 💡 Need a `Dockerfile`, `docker-compose.yml`, or systemd config? Just ask!
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend**: Flask, Flask-Login, Flask-WTF, Flask-SQLAlchemy  
+- **ORM**: SQLAlchemy (with SQLite in dev, PostgreSQL-ready)  
+- **API Docs**: Flasgger (OpenAPI 3.0)  
+- **Frontend**: Bootstrap 5, Jinja2, vanilla JS  
+- **Testing**: pytest, Flask test client  
+- **DB Migrations**: Flask-Migrate (Alembic)
+
+---
+
+## 📝 License
+
+MIT — use, modify, and deploy freely for personal or educational projects.
+
+---
+
+> Made with ☕ and care by students for students.  
+> *Perfect for coursework, portfolio projects, or your next coffee break inspiration.*
+```

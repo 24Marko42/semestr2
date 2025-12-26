@@ -15,7 +15,6 @@ def index():
     tag = request.args.get('tag', '').strip()
     query = Recipe.query
     if tag:
-        # join on tags and filter by exact tag name
         query = query.join(Recipe.tags).filter(Tag.name == tag)
     if q:
         query = query.filter(Recipe.title.ilike(f'%{q}%'))
@@ -43,26 +42,34 @@ def add():
             filename = secure_filename(f.filename)
             path = os.path.join(up, filename)
             f.save(path)
-        recipe = Recipe(title=form.title.data,
-                        description=getattr(form, 'description', None) and form.description.data,
-                        ingredients=form.ingredients.data,
-                        steps=form.steps.data,
-                        image=filename,
-                        image_url=image_url if not filename else None,
-                        author=current_user)
+
+        # Создаём рецепт
+        recipe = Recipe(
+            title=form.title.data,
+            description=getattr(form, 'description', None) and form.description.data,
+            ingredients=form.ingredients.data,
+            steps=form.steps.data,
+            image=filename,
+            image_url=image_url if not filename else None,
+            author=current_user
+        )
+
+        db.session.add(recipe)
+        db.session.flush()  
+
         tag_names = [t.strip() for t in (form.tags.data or '').split(',') if t.strip()]
         for name in tag_names:
             tag = Tag.query.filter_by(name=name).first()
             if not tag:
                 tag = Tag(name=name)
-            recipe.tags.append(tag)
-        db.session.add(recipe)
+                db.session.add(tag)  
+            if tag not in recipe.tags:
+                recipe.tags.append(tag)
+
         db.session.commit()
         flash('Recipe added')
         return redirect(url_for('web.index'))
     return render_template('add_recipe.html', form=form)
-
-
 @bp.route('/profile')
 @login_required
 def profile():

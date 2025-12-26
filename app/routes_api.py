@@ -184,7 +184,7 @@ def like_recipe(id):
         user_id = current_user.id
     if not user_id:
         return jsonify({'error': 'authentication required'}), 401
-    user = User.query.get(int(user_id))
+    user = db.session.get(User, id)
     if not user:
         return jsonify({'error': 'user not found'}), 404
     if r in user.liked:
@@ -234,7 +234,7 @@ def save_recipe(id):
         user_id = current_user.id
     if not user_id:
         return jsonify({'error': 'authentication required'}), 401
-    user = User.query.get(int(user_id))
+    user = db.session.get(User, int(user_id))
     if not user:
         return jsonify({'error': 'user not found'}), 404
     if r in user.saved:

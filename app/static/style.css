@@ -1,95 +1,108 @@
-body { font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; margin: 0; padding: 0; }
-a { text-decoration: none; }
-.card-img-top { max-height: 220px; object-fit: cover; }
-footer { background: #f8f9fa; }
-.alert { margin-top: 10px; }
-pre { white-space: pre-wrap; word-wrap: break-word; }
-.container { max-width: 980px; }
+body {
+  font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  font-size: 1rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+}
+
+.card-img-top,
+.recipe-img {
+  max-height: 220px;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+/* Recipe detail page: larger image */
+.recipe-img {
+  max-height: 480px;
+}
+
+.card {
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+}
+
+footer {
+  background: #f8f9fa;
+}
+
+.alert {
+  margin-top: 10px;
+}
+
+pre,
+.recipe-block {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+.container {
+  max-width: 980px;
+}
 
 /* Like button styles */
-.like-btn { background: none; border: 1px solid transparent; padding: .25rem .6rem; cursor: pointer; display: inline-flex; align-items: center; }
-.like-btn .heart { font-size: 1.05rem; line-height: 1; }
-.like-btn.liked .heart { color: #e25555; }
-.like-count { margin-left: .35rem; font-weight: 600; }
-.like-btn.small { padding: .2rem .4rem; font-size: .9rem; }
-
-/* Small visual feedback */
-.like-btn:active { transform: scale(.98); }
-
-/* Dark theme variables and styles */
-:root {
-  --bg: #0f1724; /* page background */
-  --surface: #0b1220; /* cards */
-  --muted: #97a0ad; /* muted text */
-  --accent: #e25555; /* like/brand accent */
-  --card-border: #1f2937;
-  --text: #e6eef6;
-  --muted-bg: rgba(255,255,255,0.03);
-} 
-
-body.dark-mode {
-  background: var(--bg);
-  color: var(--text);
-} 
-
-body.dark-mode .navbar,
-body.dark-mode .footer,
-body.dark-mode footer {
-  background-color: #07101a !important;
+.like-btn {
+  background: none;
+  border: 1px solid transparent;
+  padding: .25rem .6rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
 }
 
-body.dark-mode a { color: #cfe7ff; }
-body.dark-mode .nav-link { color: #cfe7ff !important; }
-
-body.dark-mode .card {
-  background: var(--surface);
-  border-color: var(--card-border);
-  color: var(--text);
-} 
-
-body.dark-mode .card .card-title a { color: var(--text); }
-
-body.dark-mode .badge.bg-secondary {
-  background-color: #253343 !important;
-  color: #cfe7ff !important;
+.like-btn .heart {
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
-body.dark-mode .form-control,
-body.dark-mode textarea {
-  background-color: #071826;
-  color: var(--text);
-  border-color: rgba(255,255,255,0.06);
+.like-btn.liked .heart {
+  color: #e25555;
 }
 
-body.dark-mode .btn-outline-primary {
-  color: var(--text);
-  border-color: rgba(255,255,255,0.06);
+.like-count {
+  margin-left: .35rem;
+  font-weight: 600;
 }
 
-body.dark-mode .btn-outline-primary.liked {
-  background-color: rgba(226,85,85,0.12);
-  border-color: rgba(226,85,85,0.18);
+.like-btn.small {
+  padding: .2rem .4rem;
+  font-size: .9rem;
 }
 
-body.dark-mode .alert { background-color: rgba(255,255,255,0.02); color: var(--muted); border-color: rgba(255,255,255,0.04); }
-
-/* subtle card shadows for dark theme */
-body.dark-mode .card {
-  box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+.like-btn:active {
+  transform: scale(.98);
 }
 
-/* Small spacing tweaks */
-.profile .remove-like-btn { margin-left: .6rem; }
+/* Profile */
+.profile .remove-like-btn {
+  margin-left: .6rem;
+}
 
-/* 'by' and 'Tags' label colors */
-.by-text { color: #6b7280; /* Bootstrap muted similar */ font-style: italic; }
-.tags-label { color: #6b7280; font-weight: 600; }
+.profile-stats-row .profile-stat {
+  min-width: 96px;
+}
 
-/* Dark-mode overrides */
-body.dark-mode .by-text { color: rgba(255,255,255,0.6); }
-body.dark-mode .tags-label { color: rgba(255,255,255,0.75); }
+.profile-stats-row .profile-stat .h5 {
+  font-size: 1.2rem;
+}
 
-/* Make images slightly rounded in dark mode */
-body.dark-mode .card-img-top { border-bottom-left-radius: 0.25rem; border-bottom-right-radius: 0.25rem; }
+/* Text styling */
+.by-text {
+  color: #6b7280;
+  font-style: italic;
+}
 
-
+.tags-label {
+  color: #6b7280;
+  font-weight: 600;
+}

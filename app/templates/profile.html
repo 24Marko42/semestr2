@@ -2,24 +2,35 @@
 
 {% block content %}
   <h2>Profile: {{ user.username }}</h2>
-  <h3>Saved Recipes</h3>
-  <ul>
-  {% for r in saved %}
-    <li><a href="/recipe/{{ r.id }}">{{ r.title }}</a></li>
-  {% else %}
-    <li>No saved recipes.</li>
-  {% endfor %}
-  </ul>
+  
+  <!-- Saved Recipes - показываем только если есть сохраненные рецепты -->
+  {% if saved %}
+    <h3>Saved Recipes</h3>
+    <ul>
+      {% for r in saved %}
+        <li><a href="/recipe/{{ r.id }}">{{ r.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
 
-  <h3 class="mt-4">Liked Recipes</h3>
-  <ul id="liked-list">
-  {% for r in liked %}
-    <li id="liked-{{ r.id }}">
-      <a href="/recipe/{{ r.id }}">{{ r.title }}</a>
-      <button type="button" class="btn btn-sm btn-outline-danger remove-like-btn" data-recipe-id="{{ r.id }}">Remove like</button>
-    </li>
-  {% else %}
-    <li>No liked recipes.</li>
-  {% endfor %}
-  </ul>
+  <!-- Liked Recipes - показываем только если есть лайкнутые рецепты -->
+  {% if liked %}
+    <h3 class="mt-4">Liked Recipes</h3>
+    <ul id="liked-list">
+      {% for r in liked %}
+        <li id="liked-{{ r.id }}">
+          <a href="/recipe/{{ r.id }}">{{ r.title }}</a>
+          <button type="button" class="btn btn-sm btn-outline-danger remove-like-btn" data-recipe-id="{{ r.id }}">Remove like</button>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  
+  <!-- Если нет ни сохраненных, ни лайкнутых рецептов -->
+  {% if not saved and not liked %}
+    <div class="alert alert-info mt-4">
+      <p>You haven't saved or liked any recipes yet.</p>
+      <p><a href="/">Browse recipes</a> to get started!</p>
+    </div>
+  {% endif %}
 {% endblock %}

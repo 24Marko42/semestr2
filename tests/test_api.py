@@ -1,7 +1,6 @@
-import json
 import pytest
 from app import create_app, db
-from app.models import Recipe, User
+from app.models import Recipe
 
 
 @pytest.fixture

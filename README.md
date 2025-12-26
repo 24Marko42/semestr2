@@ -1,5 +1,3 @@
-Конечно! Вот готовый `README.md` в чистом Markdown-формате — просто скопируйте и сохраните как `README.md` в корне проекта:
-
 ```md
 # ☕ Coffee Recipes  
 *Share, discover, and savour the perfect cup.*

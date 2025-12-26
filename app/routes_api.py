@@ -224,7 +224,6 @@ def save_recipe(id):
         description: Returns number of saved recipes for user
     """
     r = Recipe.query.get_or_404(id)
-    # Accept user_id via JSON/form or fall back to logged-in user
     user_id = None
     if request.is_json and request.json is not None:
         user_id = request.json.get('user_id')

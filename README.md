@@ -11,7 +11,7 @@ A clean, full-stack Flask application for managing coffee recipes — built with
 
 ---
 
-## ✨ Features
+## Features
 
 - **User accounts** — register, log in, manage your profile  
 - **Full CRUD** — create, view, edit, and delete coffee recipes  
@@ -24,7 +24,7 @@ A clean, full-stack Flask application for managing coffee recipes — built with
 
 ---
 
-## 🚀 Quick Start (Local Development)
+## Quick Start (Local Development)
 
 ```powershell
 # 1. Clone & enter project
@@ -43,7 +43,7 @@ pip install -r requirements.txt
 python run.py
 ```
 
-✅ Visit:  
+Visit:  
 - **Web UI**: [http://127.0.0.1:5000](http://127.0.0.1:5000)  
 - **API Docs**: [http://127.0.0.1:5000/apidocs](http://127.0.0.1:5000/apidocs)
 
@@ -51,7 +51,7 @@ python run.py
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Ensure everything works as expected:
 
@@ -63,7 +63,7 @@ All tests should pass. Warnings about `Query.get()` are safe to ignore (SQLAlche
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```
 coffee-recipes/
@@ -88,7 +88,7 @@ coffee-recipes/
 
 ---
 
-## 🌱 Seed Sample Data
+## Seed Sample Data
 
 Add realistic demo recipes (with Unsplash images):
 
@@ -100,25 +100,25 @@ Great for screenshots, demos, or testing UI flows.
 
 ---
 
-## 🌐 Deployment Options
+## Deployment Options
 
-### 🔧 VPS (Nginx + Gunicorn)
+### VPS (Nginx + Gunicorn)
 - Runs behind reverse proxy  
 - Static files served by Nginx  
 - TLS via Let’s Encrypt  
 - Full control over environment
 
-### 🚀 PaaS (Render / Railway / Heroku)
+### PaaS (Render / Railway / Heroku)
 - Git push → auto-deploy  
 - Managed TLS & scaling  
 - Easy env var setup  
 - Free tiers available
 
-> 💡 Need a `Dockerfile`, `docker-compose.yml`, or systemd config? Just ask!
+> Need a `Dockerfile`, `docker-compose.yml`, or systemd config? Just ask!
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Backend**: Flask, Flask-Login, Flask-WTF, Flask-SQLAlchemy  
 - **ORM**: SQLAlchemy (with SQLite in dev, PostgreSQL-ready)  
@@ -126,15 +126,3 @@ Great for screenshots, demos, or testing UI flows.
 - **Frontend**: Bootstrap 5, Jinja2, vanilla JS  
 - **Testing**: pytest, Flask test client  
 - **DB Migrations**: Flask-Migrate (Alembic)
-
----
-
-## 📝 License
-
-MIT — use, modify, and deploy freely for personal or educational projects.
-
----
-
-> Made with ☕ and care by students for students.  
-> *Perfect for coursework, portfolio projects, or your next coffee break inspiration.*
-```

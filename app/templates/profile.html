@@ -3,7 +3,7 @@
 {% block content %}
   <h2>Profile: {{ user.username }}</h2>
   
-  <!-- Saved Recipes - показываем только если есть сохраненные рецепты -->
+  {% comment %} <!-- Saved Recipes - сохраненные рецепты -->
   {% if saved %}
     <h3>Saved Recipes</h3>
     <ul>
@@ -11,9 +11,9 @@
         <li><a href="/recipe/{{ r.id }}">{{ r.title }}</a></li>
       {% endfor %}
     </ul>
-  {% endif %}
+  {% endif %} {% endcomment %}
 
-  <!-- Liked Recipes - показываем только если есть лайкнутые рецепты -->
+  <!-- Liked Recipes - лайкнутые рецепты -->
   {% if liked %}
     <h3 class="mt-4">Liked Recipes</h3>
     <ul id="liked-list">

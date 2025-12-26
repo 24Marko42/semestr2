@@ -35,11 +35,9 @@ def create_app(config_class=Config, config_overrides=None):
     if migrate:
         migrate.init_app(app, db)
     login.init_app(app)
-    # Ensure unauthorized users are redirected to the auth.login view
     login.login_view = 'auth.login'
     login.login_message = 'Please log in to access this page.'
 
-    # Initialize Flasgger with the YAML spec if present and flasgger installed
     if Swagger:
         try:
             swagger_spec = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'swagger.yml')

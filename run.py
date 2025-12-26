@@ -14,7 +14,6 @@ def main():
     port = int(os.getenv('FLASK_RUN_PORT', os.getenv('PORT', '5000')))
     debug = os.getenv('FLASK_DEBUG', '0') in ('1', 'true', 'True')
 
-    # If using SQLite and DB file does not exist, create tables automatically (convenience for local dev)
     try:
         from app import db
         db_url = os.getenv('DATABASE_URL') or app.config.get('SQLALCHEMY_DATABASE_URI')

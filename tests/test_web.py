@@ -125,6 +125,5 @@ def test_tag_search(client):
     rv = client.get('/?tag=espresso')
     assert b'Espresso Shot' in rv.data
     assert b'Foamy Latte' not in rv.data
-    # q + tag together
     rv2 = client.get('/?tag=espresso&q=Espresso')
     assert b'Espresso Shot' in rv2.data
